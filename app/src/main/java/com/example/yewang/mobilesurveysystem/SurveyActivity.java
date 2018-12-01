@@ -1,5 +1,6 @@
 package com.example.yewang.mobilesurveysystem;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -37,9 +38,9 @@ public class SurveyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_activitiy);
-
-        //TODO have this set come from the intent that launched the progarm
-        surveyCoords = "123456789 , 123456789";
+        
+        Intent launcher = getIntent();
+        surveyCoords = launcher.getStringExtra("location");
 
         scores = new ArrayList<>();
         numUsers = new ArrayList<>();

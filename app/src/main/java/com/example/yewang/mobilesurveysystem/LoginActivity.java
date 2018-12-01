@@ -239,6 +239,8 @@ public class LoginActivity extends AppCompatActivity {
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
 
+
+
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -249,12 +251,16 @@ public class LoginActivity extends AppCompatActivity {
                     //finish();
                     //updateUI(user);
                 } else {
-                    Toast.makeText(LoginActivity.this, "Incorrect email/password.", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(LoginActivity.this, "Incorrect email/password.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "YO!!!!.", Toast.LENGTH_SHORT).show();
                     //updateUI(null);
                 }
 
             }
         });
+
+
+
     }
 //
 //    private boolean isEmailValid(String email) {

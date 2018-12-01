@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
 
 public class SurveyActivity extends AppCompatActivity {
+    private static final String TAG = "Group-project";
     ArrayList<String> questions;
     Button nextBtn, backBtn;
     int currentQuestion = 0;
@@ -39,8 +40,9 @@ public class SurveyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_menu_activitiy);
 
         //TODO have this set come from the intent that launched the progarm
+        surveyCoords = getIntent().getStringExtra("location");
+        Log.i(TAG, "testing location from QR scan: " + surveyCoords);
         surveyCoords = "123456789 , 123456789";
-
         scores = new ArrayList<>();
         numUsers = new ArrayList<>();
         questions = new ArrayList<String>();
@@ -133,18 +135,21 @@ public class SurveyActivity extends AppCompatActivity {
             nextBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.i("Finsih", "thakns for answers");
+                    Log.i("Finish", "thanks for answers");
                     answers[currentQuestion] = rg.getCheckedRadioButtonId();
 //                    for(int x:answers){
-//                        Log.i("Finsih", Integer.toString(x));
+//                        Log.i("Finish", Integer.toString(x));
 //                    }
                     back = false;
                     //submit answers to firebase
                     firebaseSubmit();
                     //TODO exit the activity, return to wherever we need to go
+                    //Since we launched this activity from the main, once we call finish() we
+                    //will return to the main activity
                     //Intent myIntent = new Intent();
                     Toast.makeText(getApplicationContext(), "Thank you for taking this survey",
                             Toast.LENGTH_SHORT).show();
+                    finish();
                 }
             });
         }

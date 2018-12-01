@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "Group-project";
     private static final int LOG_IN_REQUEST = 0;
     private static final int QR_CODE_REQUEST = 1;
+    private static final int SURVEY_REQUEST = 2;
     private FirebaseDatabase database;
     private String user;
     private String location;

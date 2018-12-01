@@ -170,6 +170,9 @@ public class SurveyActivity extends AppCompatActivity {
     public void firebaseSubmit(){
         DatabaseReference thr = FirebaseDatabase.getInstance().getReference("New Survey")
                 .child(user).child(surveyCoords).child(surveyName);
+        DatabaseReference thr2 = FirebaseDatabase.getInstance().getReference("Answers")
+                .child(user).child(surveyCoords).child(surveyName);
+        thr2 = thr2.push();
         int i =1;
         String curr;
         for(int x:answers){
@@ -182,6 +185,7 @@ public class SurveyActivity extends AppCompatActivity {
 
             thr.child(Integer.toString(i)).child(questions.get(i-1)).setValue(Integer.toString(((int)a))
                 + "," + Integer.toString(z));
+            thr2.child(Integer.toString(i)).child(questions.get(i-1)).setValue(x);
             //thr.child(Integer.toString(i)).setValue(x);
             i++;
         }

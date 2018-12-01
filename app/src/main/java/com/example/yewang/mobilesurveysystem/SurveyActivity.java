@@ -42,7 +42,7 @@ public class SurveyActivity extends AppCompatActivity {
         //TODO have this set come from the intent that launched the progarm
         surveyCoords = getIntent().getStringExtra("location");
         Log.i(TAG, "testing location from QR scan: " + surveyCoords);
-        surveyCoords = "123456789 , 123456789";
+        //surveyCoords = "123456789 , 123456789";
         scores = new ArrayList<>();
         numUsers = new ArrayList<>();
         questions = new ArrayList<String>();
@@ -122,6 +122,7 @@ public class SurveyActivity extends AppCompatActivity {
        if(rg.getCheckedRadioButtonId() == -1 && !back){
             Toast.makeText(getApplicationContext(), "Please select an option",
                     Toast.LENGTH_LONG).show();
+            return;
         }else{
            if(!back)
                answers[i-1] = rg.getCheckedRadioButtonId();

@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class AddWizardItem extends Activity {
 
@@ -24,6 +25,12 @@ public class AddWizardItem extends Activity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if(mQuestion.getText().toString().trim().equals("")){
+                    Toast.makeText(getApplicationContext(),"Missing Question Name!",Toast.LENGTH_SHORT).show();
+                return;
+                }
+
                 Log.i(TAG, "onClick: submit data from add");
 
                 Intent intent = new Intent();

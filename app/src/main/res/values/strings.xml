@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MobileSurveySystem</string>
+    <string name="app_name">Mobile Survey System</string>
     <string name="question_tag">Question</string>
     <string name="title_activity_main">Mobile Survey System</string>
     <string name="log_in">Log In</string>

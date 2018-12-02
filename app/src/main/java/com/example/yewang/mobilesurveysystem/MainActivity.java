@@ -99,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         viewSurveys.setVisibility(View.INVISIBLE);
-
         createSurvey.setVisibility(View.INVISIBLE);
     }
 
@@ -126,8 +125,9 @@ public class MainActivity extends AppCompatActivity {
                 viewSurveys.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(MainActivity.this, SurveyActivity.class);
-                        startActivity(intent);
+                        //Intent intent = new Intent(MainActivity.this, SurveyActivity.class);
+                        //startActivity(intent);
+                        Log.i(TAG, "Launching view survey activity");
                     }
                 });
 

@@ -3,6 +3,7 @@
     <string name="question_tag">Question</string>
     <string name="title_activity_main">Mobile Survey System</string>
     <string name="log_in">Log In</string>
+    <string name="ad_log_in">Admin</string>
     <string name="log_out">Log Out</string>
     <string name="scan_qr_code">Scan QR Code</string>
     <string name="title_activity_login">Sign in</string>

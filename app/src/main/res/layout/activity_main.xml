@@ -60,8 +60,8 @@
 
     <ImageButton
         android:id="@+id/scan_qr_button"
-        android:layout_width="329dp"
-        android:layout_height="297dp"
+        android:layout_width="290dp"
+        android:layout_height="271dp"
         android:layout_marginBottom="104dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"

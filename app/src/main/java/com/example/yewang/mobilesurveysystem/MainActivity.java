@@ -122,11 +122,13 @@ public class MainActivity extends AppCompatActivity {
 
             }
         } else if (requestCode == QR_CODE_REQUEST) {
-            location = data.getStringExtra("location");
-            Intent intent = new Intent(MainActivity.this, SurveyActivity.class);
-            intent.putExtra("location", data.getStringExtra("location"));
-            Log.i(TAG, "location is: " + location);
-            startActivity(intent);
+            if (resultCode == RESULT_OK) {
+                location = data.getStringExtra("location");
+                Intent intent = new Intent(MainActivity.this, SurveyActivity.class);
+                intent.putExtra("location", data.getStringExtra("location"));
+                Log.i(TAG, "location is: " + location);
+                startActivity(intent);
+            }
         }
     }
 

@@ -89,7 +89,6 @@ public class SurveyActivity extends AppCompatActivity {
                             }
                         }
                         break;
-
                 }
 
                 answers = new int[questions.size()];

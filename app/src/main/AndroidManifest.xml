@@ -36,7 +36,8 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login" />
-        <activity android:name=".ViewSurveys"></activity>
+        <activity android:name=".ViewSurveys" />
+        <activity android:name=".ViewSurveyActivity"></activity>
     </application>
 
 </manifest>

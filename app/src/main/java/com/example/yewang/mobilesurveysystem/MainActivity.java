@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private String location;
     private Button login;
     private Button logout;
-    private Button qrScan;
+    private ImageButton qrScan;
     private Button viewSurveys;
     private Button createSurvey;
     private FirebaseAuth mAuth;

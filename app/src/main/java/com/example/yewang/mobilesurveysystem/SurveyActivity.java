@@ -39,7 +39,6 @@ public class SurveyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_activitiy);
 
-        //TODO have this set come from the intent that launched the progarm
         surveyCoords = getIntent().getStringExtra("location");
         Log.i(TAG, "testing location from QR scan: " + surveyCoords);
         //surveyCoords = "123456789 , 123456789";
@@ -89,7 +88,6 @@ public class SurveyActivity extends AppCompatActivity {
                             }
                         }
                         break;
-
                 }
 
                 answers = new int[questions.size()];

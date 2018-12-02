@@ -1,5 +1,8 @@
 package com.example.yewang.mobilesurveysystem;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.app.Activity;
@@ -23,6 +26,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.IOException;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private Button viewSurveys;
     private Button createSurvey;
     private FirebaseAuth mAuth;
-
+    private static final int REQUEST_CAMERA_PERMISSION = 201;
 
 
 
@@ -55,6 +60,12 @@ public class MainActivity extends AppCompatActivity {
         qrScan = findViewById(R.id.scan_qr_button);
         viewSurveys = findViewById(R.id.view_survey_button);
         createSurvey = findViewById(R.id.create_survey_button);
+
+        if (ActivityCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(MainActivity.this, new
+                    String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
+        }
+
 
         login.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -88,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         viewSurveys.setVisibility(View.INVISIBLE);
-
         createSurvey.setVisibility(View.INVISIBLE);
     }
 
@@ -115,8 +125,9 @@ public class MainActivity extends AppCompatActivity {
                 viewSurveys.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(MainActivity.this, SurveyActivity.class);
-                        startActivity(intent);
+                        //Intent intent = new Intent(MainActivity.this, SurveyActivity.class);
+                        //startActivity(intent);
+                        Log.i(TAG, "Launching view survey activity");
                     }
                 });
 

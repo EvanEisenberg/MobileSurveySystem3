@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         viewSurveys = findViewById(R.id.view_survey_button);
         createSurvey = findViewById(R.id.create_survey_button);
 
-        if (ActivityCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(MainActivity.this, new
                     String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
         }

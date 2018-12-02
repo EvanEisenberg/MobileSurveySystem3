@@ -175,92 +175,68 @@ public class LoginActivity extends AppCompatActivity {
 //            return;
 //        }
 
-        // Reset errors.
-        mEmailView.setError(null);
-        mPasswordView.setError(null);
-        // Store values at the time of the login attempt.
-        final String email = mEmailView.getText().toString();
-        String password = mPasswordView.getText().toString();
+        if (mEmailView.getText().length() < 1) {
+            Toast.makeText(LoginActivity.this, "Please enter an email address.", Toast.LENGTH_SHORT).show();
+        } else if (mPasswordView.getText().length() < 1) {
+            Toast.makeText(LoginActivity.this, "Please enter a password.", Toast.LENGTH_SHORT).show();
+        } else {
+
+            // Store values at the time of the login attempt.
+            final String email = mEmailView.getText().toString();
+            final String password = mPasswordView.getText().toString();
 
 
-        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    FirebaseUser user = mAuth.getCurrentUser();
-                    Log.i(TAG, "successful log in!");
-                    Intent result = new Intent();
-                    result.putExtra("user", email);
-                    setResult(RESULT_OK, result);
-                    finish();
-                    //updateUI(user);
-                } else {
-                    Toast.makeText(LoginActivity.this, "Incorrect email/password.", Toast.LENGTH_SHORT).show();
-                    //updateUI(null);
+            mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        Log.i(TAG, "successful log in!");
+                        Intent result = new Intent();
+                        result.putExtra("user", email);
+                        setResult(RESULT_OK, result);
+                        finish();
+                    } else {
+                        Log.i(TAG, "Incorrect email/password");
+                        Toast.makeText(LoginActivity.this, "Incorrect email/password.", Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
-        });
-//
-//        boolean cancel = false;
-//        View focusView = null;
-//
-//        // Check for a valid password, if the user entered one.
-//        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-//            mPasswordView.setError(getString(R.string.error_invalid_password));
-//            focusView = mPasswordView;
-//            cancel = true;
-//        }
-//
-//        // Check for a valid email address.
-//        if (TextUtils.isEmpty(email)) {
-//            mEmailView.setError(getString(R.string.error_field_required));
-//            focusView = mEmailView;
-//            cancel = true;
-//        } else if (!isEmailValid(email)) {
-//            mEmailView.setError(getString(R.string.error_invalid_email));
-//            focusView = mEmailView;
-//            cancel = true;
-//        }
-//
-//        if (cancel) {
-//            // There was an error; don't attempt login and focus the first
-//            // form field with an error.
-//            focusView.requestFocus();
-//        } else {
-//            // Show a progress spinner, and kick off a background task to
-//            // perform the user login attempt.
-//            showProgress(true);
-//            mAuthTask = new UserLoginTask(email, password);
-//            mAuthTask.execute((Void) null);
-//        }
+            });
+        }
     }
 
     private void attemptRegister() {
-        String email = mEmailView.getText().toString();
-        String password = mPasswordView.getText().toString();
 
+        if (mEmailView.getText().length() < 1) {
+            Toast.makeText(LoginActivity.this, "Please enter an email address.", Toast.LENGTH_SHORT).show();
+        } else if (mPasswordView.getText().length() < 1) {
+            Toast.makeText(LoginActivity.this, "Please enter a password.", Toast.LENGTH_SHORT).show();
+        } else {
+            final String email = mEmailView.getText().toString();
+            final String password = mPasswordView.getText().toString();
+            mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        Log.i(TAG, "successful register!");
+                        Toast.makeText(LoginActivity.this, "Successfully registered!", Toast.LENGTH_SHORT).show();
+                        mAuth.signInWithEmailAndPassword(email, password);
+                        Log.i(TAG, "successful log in!");
+                        Intent result = new Intent();
+                        result.putExtra("user", email);
+                        setResult(RESULT_OK, result);
+                        finish();
+                        //updateUI(user);
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Incorrect email/password.", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(LoginActivity.this, "YO!!!!.", Toast.LENGTH_SHORT).show();
+                        //updateUI(null);
+                    }
 
-
-        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    FirebaseUser user = mAuth.getCurrentUser();
-                    Log.i(TAG, "successful register!");
-                    Toast.makeText(LoginActivity.this, "Successfully registered!", Toast.LENGTH_SHORT).show();
-                    //finish();
-                    //updateUI(user);
-                } else {
-//                    Toast.makeText(LoginActivity.this, "Incorrect email/password.", Toast.LENGTH_SHORT).show();
-                    Toast.makeText(LoginActivity.this, "YO!!!!.", Toast.LENGTH_SHORT).show();
-                    //updateUI(null);
                 }
-
-            }
-        });
-
-
-
+            });
+        }
     }
 //
 //    private boolean isEmailValid(String email) {

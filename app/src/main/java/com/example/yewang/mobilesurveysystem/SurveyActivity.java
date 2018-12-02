@@ -41,7 +41,7 @@ public class SurveyActivity extends AppCompatActivity {
 
         surveyCoords = getIntent().getStringExtra("location");
         Log.i(TAG, "testing location from QR scan: " + surveyCoords);
-        //surveyCoords = "123456789 , 123456789";
+        surveyCoords = "123456789 , 123456789";
         scores = new ArrayList<>();
         numUsers = new ArrayList<>();
         questions = new ArrayList<String>();
@@ -120,13 +120,17 @@ public class SurveyActivity extends AppCompatActivity {
        if(rg.getCheckedRadioButtonId() == -1 && !back){
             Toast.makeText(getApplicationContext(), "Please select an option",
                     Toast.LENGTH_LONG).show();
+            currentQuestion--;
             return;
         }else{
            if(!back)
                answers[i-1] = rg.getCheckedRadioButtonId();
+           else
+               rg.check(answers[i]);
             TextView quesView = (TextView) findViewById(R.id.questionView);
             quesView.setText(questions.get(i));
-            rg.clearCheck();
+            if(!back)
+                rg.clearCheck();
         }
 
         if(i == questions.size()-1){
@@ -134,6 +138,11 @@ public class SurveyActivity extends AppCompatActivity {
             nextBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if(rg.getCheckedRadioButtonId() == -1 && !back){
+                        Toast.makeText(getApplicationContext(), "Please select an option",
+                                Toast.LENGTH_LONG).show();
+                        return;
+                    }
                     Log.i("Finish", "thanks for answers");
                     answers[currentQuestion] = rg.getCheckedRadioButtonId();
 //                    for(int x:answers){

@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">MobileSurveySystem</string>
     <string name="question_tag">Question</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main">Mobile Survey System</string>
     <string name="log_in">Log In</string>
     <string name="log_out">Log Out</string>
     <string name="scan_qr_code">Scan QR Code</string>

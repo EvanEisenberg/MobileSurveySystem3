@@ -73,9 +73,10 @@ public class QrActivity extends AppCompatActivity {
                                 }
                             }
                         }
-
-                        Log.i(TAG, "snapshot does not exist");
-                        Toast.makeText(getApplicationContext(), "Location invalid", Toast.LENGTH_SHORT).show();
+                        if(result.getStringExtra("location") == null) {
+                            Log.i(TAG, "snapshot does not exist");
+                            Toast.makeText(getApplicationContext(), "Location invalid", Toast.LENGTH_SHORT).show();
+                        }
 
                     }
 

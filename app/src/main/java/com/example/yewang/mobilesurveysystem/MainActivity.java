@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
     private static final int QR_CODE_REQUEST = 1;
     private FirebaseDatabase database;
     private String user;
-    private String location;
     private Button login;
     private Button logout;
     private ImageButton qrScan;
@@ -141,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, SurveyActivity.class);
                 intent.putExtra("location", data.getStringExtra("location"));
                 intent.putExtra("user", data.getStringExtra("user"));
-                Log.i(TAG, "location is: " + location);
+                Log.i(TAG, "location is: " + location1);
                 startActivity(intent);
             }
         }

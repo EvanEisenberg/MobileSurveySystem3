@@ -26,6 +26,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class QrActivity extends AppCompatActivity {
 
@@ -35,7 +37,7 @@ public class QrActivity extends AppCompatActivity {
     private CameraSource cameraSource;
     private static final int REQUEST_CAMERA_PERMISSION = 201;
     Button btnAction;
-    String user = "";
+    String userName = "";
     String location = "";
 
 
@@ -63,17 +65,18 @@ public class QrActivity extends AppCompatActivity {
 
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        for(DataSnapshot user : dataSnapshot.getChildren()) {
-                            for (DataSnapshot coord : user.getChildren()) {
-                                if(coord.getKey().equals(location)) {
-                                    result.putExtra("location", location);
-                                    result.putExtra("user", user.getKey());
-                                    setResult(RESULT_OK, result);
-                                    Log.i(TAG, "data found");
-                                    finish();
-                                    break;
-                                }
+                        dataSnapshot = dataSnapshot.child(userName);
+                        for (DataSnapshot coord : dataSnapshot.getChildren()) {
+                            Log.i(TAG, coord.getKey());
+                            if(coord.getKey().equals(location)) {
+                                result.putExtra("location", location);
+                                result.putExtra("user", userName);
+                                setResult(RESULT_OK, result);
+                                Log.i(TAG, "data found");
+                                finish();
+                                break;
                             }
+
                         }
                         if(result.getStringExtra("location") == null) {
                             Log.i(TAG, "snapshot does not exist");
@@ -152,7 +155,14 @@ public class QrActivity extends AppCompatActivity {
 
                         @Override
                         public void run() {
-                            location = barcodes.valueAt(0).displayValue;
+                            Log.i(TAG, "before read");
+                            String code = barcodes.valueAt(0).displayValue;
+                            Log.i(TAG, "after read");
+                            String[] splitCode = code.split(";");
+                            userName = splitCode[0];
+                            location = splitCode[1];
+                            Log.i(TAG, "userName is " + userName);
+                            Log.i(TAG, "location is " + location);
                             txtBarcodeValue.setText(location);
                             btnAction.setBackgroundColor(getResources().getColor(R.color.colorBlue));
                         }

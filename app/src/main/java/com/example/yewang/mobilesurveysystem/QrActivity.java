@@ -168,6 +168,8 @@ public class QrActivity extends AppCompatActivity {
                                 btnAction.setBackgroundColor(getResources().getColor(R.color.colorBlue));
                             } else {
                                 Log.e(TAG, "splitCode size is " + splitCode.length);
+                                txtBarcodeValue.setText("INVALID QR CODE");
+                                btnAction.setBackgroundColor(getResources().getColor(R.color.colorRed));
                             }
                         }
                     });

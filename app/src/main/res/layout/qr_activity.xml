@@ -20,7 +20,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:text="No Barcode Detected"
+        android:text="@string/no_barcode_detected"
         android:textColor="@android:color/white"
         android:textSize="20sp" />
 
@@ -30,6 +30,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="Scan QR Code" />
+        android:text="@string/scan_qr_code" />
 
 </RelativeLayout>

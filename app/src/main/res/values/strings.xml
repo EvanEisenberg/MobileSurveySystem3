@@ -25,4 +25,5 @@
     <string name="view_surveys">View Surveys</string>
     <string name="add_new_question">Add new Question</string>
     <string name="submit_survery">Submit Survery</string>
+    <string name="no_barcode_detected">No Barcode Detected</string>
 </resources>

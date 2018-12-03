@@ -15,22 +15,26 @@
         <!--android:text=""-->
         <!--tools:layout_editor_absoluteX="0dp"-->
         <!--tools:layout_editor_absoluteY="0dp" />-->
+
+
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingLeft="16dp"
-        android:paddingRight="16dp" >
+        android:paddingRight="16dp">
 
-    <TextView
+        <TextView
         android:id="@+id/questionView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+            android:textSize="32dp"
+            android:textColor="@color/colorBlack"/>
 
     <RadioGroup
         android:id="@+id/optionsGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/questionView"/>
+        android:layout_below="@id/questionView" />
 
     <Button
         android:id="@+id/nextBtn"
@@ -47,6 +51,9 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
         android:text="Button" />
+
+
+
 
     </RelativeLayout>
 

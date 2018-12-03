@@ -1,7 +1,9 @@
 package com.example.yewang.mobilesurveysystem;
 
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -39,9 +41,10 @@ public class SurveyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_activitiy);
 
+
         surveyCoords = getIntent().getStringExtra("location");
         Log.i(TAG, "testing location from QR scan: " + surveyCoords);
-        //surveyCoords = "123456789 , 123456789";
+        surveyCoords = "123456789 , 123456789";
         scores = new ArrayList<>();
         numUsers = new ArrayList<>();
         questions = new ArrayList<String>();
@@ -72,6 +75,7 @@ public class SurveyActivity extends AppCompatActivity {
                     DataSnapshot coordSnapshot = userSnapshot.child(surveyCoords);
                         for(DataSnapshot surv: coordSnapshot.getChildren()){
                             surveyName = surv.getKey();
+                            getSupportActionBar().setTitle(surveyName);
                         }
                         DataSnapshot surv= coordSnapshot.child(surveyName);
                         user = userSnapshot.getKey();
@@ -87,6 +91,7 @@ public class SurveyActivity extends AppCompatActivity {
                                 }
                             }
                         }
+
                         break;
                 }
 
@@ -120,13 +125,17 @@ public class SurveyActivity extends AppCompatActivity {
        if(rg.getCheckedRadioButtonId() == -1 && !back){
             Toast.makeText(getApplicationContext(), "Please select an option",
                     Toast.LENGTH_LONG).show();
+            currentQuestion--;
             return;
         }else{
            if(!back)
                answers[i-1] = rg.getCheckedRadioButtonId();
+           else
+               rg.check(answers[i]);
             TextView quesView = (TextView) findViewById(R.id.questionView);
             quesView.setText(questions.get(i));
-            rg.clearCheck();
+            if(!back)
+                rg.clearCheck();
         }
 
         if(i == questions.size()-1){
@@ -134,6 +143,11 @@ public class SurveyActivity extends AppCompatActivity {
             nextBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if(rg.getCheckedRadioButtonId() == -1 && !back){
+                        Toast.makeText(getApplicationContext(), "Please select an option",
+                                Toast.LENGTH_LONG).show();
+                        return;
+                    }
                     Log.i("Finish", "thanks for answers");
                     answers[currentQuestion] = rg.getCheckedRadioButtonId();
 //                    for(int x:answers){

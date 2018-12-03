@@ -1,7 +1,9 @@
 package com.example.yewang.mobilesurveysystem;
 
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -39,6 +41,7 @@ public class SurveyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_activitiy);
 
+
         surveyCoords = getIntent().getStringExtra("location");
         Log.i(TAG, "testing location from QR scan: " + surveyCoords);
         surveyCoords = "123456789 , 123456789";
@@ -72,6 +75,7 @@ public class SurveyActivity extends AppCompatActivity {
                     DataSnapshot coordSnapshot = userSnapshot.child(surveyCoords);
                         for(DataSnapshot surv: coordSnapshot.getChildren()){
                             surveyName = surv.getKey();
+                            getSupportActionBar().setTitle(surveyName);
                         }
                         DataSnapshot surv= coordSnapshot.child(surveyName);
                         user = userSnapshot.getKey();
@@ -87,6 +91,7 @@ public class SurveyActivity extends AppCompatActivity {
                                 }
                             }
                         }
+
                         break;
                 }
 

@@ -114,6 +114,14 @@ public class LoginActivity extends AppCompatActivity {
                 attemptRegister();
             }
         });
+
+        Button mResetPassButton = (Button) findViewById(R.id.reset_pass_button);
+        mResetPassButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                attemptPasswordRecovery();
+            }
+        });
     }
 
     public void onStart() {
@@ -186,6 +194,28 @@ public class LoginActivity extends AppCompatActivity {
                         //updateUI(null);
                     }
 
+                }
+            });
+        }
+    }
+
+    private void attemptPasswordRecovery() {
+        if (mEmailView.getText().length() < 1) {
+            Toast.makeText(LoginActivity.this, "Please enter email of account to reset password", Toast.LENGTH_SHORT).show();
+        } else {
+            final String email = mEmailView.getText().toString();
+            mAuth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        Log.i(TAG, "Email sent.");
+                        Toast.makeText(LoginActivity.this, "Check " + email + " with instructions on how to reset your password!", Toast.LENGTH_SHORT).show();
+                        mEmailView.setText("");
+                        mPasswordView.setText("");
+                    } else {
+                        Log.i(TAG, "email not found");
+                        Toast.makeText(LoginActivity.this, "Email not recognized. Please retry.", Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
         }

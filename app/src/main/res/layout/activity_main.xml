@@ -12,20 +12,20 @@
         android:id="@+id/log_in_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="148dp"
         android:text="@string/ad_log_in"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scan_qr_button" />
 
     <Button
         android:id="@+id/log_out_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="148dp"
         android:text="@string/log_out"
         android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/log_in_button"
+        app:layout_constraintStart_toStartOf="@+id/log_in_button" />
 
     <!--<Button-->
     <!--android:id="@+id/scan_qr_button1"-->
@@ -41,11 +41,12 @@
         android:id="@+id/view_survey_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="84dp"
         android:text="@string/view_surveys"
-        app:layout_constraintBottom_toTopOf="@+id/create_survey_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/scan_qr_button"
+        app:layout_constraintStart_toStartOf="@+id/create_survey_button"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
@@ -56,18 +57,20 @@
         android:text="@string/create_survey"
         app:layout_constraintBottom_toTopOf="@+id/scan_qr_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_survey_button" />
 
     <ImageButton
         android:id="@+id/scan_qr_button"
-        android:layout_width="290dp"
+        android:layout_width="292dp"
         android:layout_height="271dp"
-        android:layout_marginBottom="104dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/log_out_button"
+        android:layout_marginStart="46dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="46dp"
+        android:layout_marginBottom="58dp"
+        app:layout_constraintBottom_toTopOf="@+id/log_in_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.512"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/create_survey_button"
         app:srcCompat="@drawable/qrscan" />
 </android.support.constraint.ConstraintLayout>

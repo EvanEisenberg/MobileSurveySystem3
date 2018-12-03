@@ -21,6 +21,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
@@ -29,6 +31,7 @@ public class SurveryWizard extends ListActivity {
 
     private static final String TAG = "Group-project";
     private static final int ADD_TODO_ITEM_REQUEST = 0;
+    private boolean check = true;
     private FirebaseDatabase database;
     private FirebaseAuth mAuth;
 
@@ -80,7 +83,6 @@ public class SurveryWizard extends ListActivity {
                 final DatabaseReference databasebRef = database.getReference("New Survey");
 
                 List<WizardItem> alldata = mAdapter.getAllItemsData();
-                //            TODO check if there is nothing to submit then pop something
 
                 if(alldata.size()!=0){
                     EditText title =  findViewById(R.id.titleinput);
@@ -100,26 +102,26 @@ public class SurveryWizard extends ListActivity {
                         if(tmp_title.isEmpty()){
                             Toast.makeText(getApplicationContext(),"Missing Survey Name!",Toast.LENGTH_SHORT).show();
                         }else{
-                            int question_number =1;
+                            Log.i(TAG, "Coords are unique, adding new survey!");
+                            int question_number = 1;
                             final FirebaseUser test = mAuth.getCurrentUser();
                             databasebRef.child(test.getUid()) //user
-                                    .child(lat_string+" , "+log_string)
+                                    .child(lat_string + " , " + log_string)
                                     .setValue(null);
 
-                            for (WizardItem x : alldata ){
+                            for (WizardItem x : alldata) {
                                 Log.i(TAG, "the user is: " + user);
 
                                 databasebRef.child(test.getUid()) //user
-                                        .child(lat_string+" , "+log_string) //coordinates
-                                        .child(tmp_title).child(question_number+"") //survy name
+                                        .child(lat_string + " , " + log_string) //coordinates
+                                        .child(tmp_title).child(question_number + "") //survy name
                                         .child(x.getQuestion()) //question
                                         .setValue("0,0"); //defalt rate
 
 
-                                Log.i(TAG, "data: "+x.getQuestion());
+                                Log.i(TAG, "data: " + x.getQuestion());
                                 question_number++;
                             }
-
                             finish();
                         }
                     }

@@ -35,7 +35,8 @@ public class QrActivity extends AppCompatActivity {
     private CameraSource cameraSource;
     private static final int REQUEST_CAMERA_PERMISSION = 201;
     Button btnAction;
-    String intentData = "";
+    String user = "";
+    String location = "";
 
 
     @Override
@@ -64,8 +65,9 @@ public class QrActivity extends AppCompatActivity {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         for(DataSnapshot user : dataSnapshot.getChildren()) {
                             for (DataSnapshot coord : user.getChildren()) {
-                                if(coord.getKey().equals(intentData)) {
-                                    result.putExtra("location", intentData);
+                                if(coord.getKey().equals(location)) {
+                                    result.putExtra("location", location);
+                                    result.putExtra("user", user.getKey());
                                     setResult(RESULT_OK, result);
                                     Log.i(TAG, "data found");
                                     finish();
@@ -150,8 +152,8 @@ public class QrActivity extends AppCompatActivity {
 
                         @Override
                         public void run() {
-                            intentData = barcodes.valueAt(0).displayValue;
-                            txtBarcodeValue.setText(intentData);
+                            location = barcodes.valueAt(0).displayValue;
+                            txtBarcodeValue.setText(location);
                             btnAction.setBackgroundColor(getResources().getColor(R.color.colorBlue));
                         }
                     });

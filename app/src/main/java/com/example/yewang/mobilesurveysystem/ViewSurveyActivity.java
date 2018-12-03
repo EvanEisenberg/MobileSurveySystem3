@@ -51,6 +51,7 @@ public class ViewSurveyActivity extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("New Survey").child(user.getUid());
+        //final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("New Survey");
         databaseReference.runTransaction(new Transaction.Handler() {
             @Override
             public Transaction.Result doTransaction(MutableData mutableData) {
@@ -59,8 +60,12 @@ public class ViewSurveyActivity extends AppCompatActivity {
 
             @Override
             public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
-                if (databaseError != null || !b || dataSnapshot == null) {
-                    Log.i(TAG, "Failed to get DataSnapshot");
+                if (databaseError != null) {
+                    Log.i(TAG, "Failed to get DataSnapshot (ERROR)");
+                } else if (!b) {
+                    Log.i(TAG, "Failed to get DataSnapshot (!B)");
+                } else if (dataSnapshot == null) {
+                    Log.i(TAG, "Failed to get DataSnapshot (NULL)");
                 } else {
                     Log.i(TAG, "Successfully got DataSnapshot");
                     int loc = 0;

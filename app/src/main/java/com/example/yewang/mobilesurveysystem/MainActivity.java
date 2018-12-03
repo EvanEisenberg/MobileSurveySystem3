@@ -137,9 +137,10 @@ public class MainActivity extends AppCompatActivity {
             }
         } else if (requestCode == QR_CODE_REQUEST) {
             if (resultCode == RESULT_OK) {
-                location = data.getStringExtra("location");
+                String location1 = data.getStringExtra("location");
                 Intent intent = new Intent(MainActivity.this, SurveyActivity.class);
                 intent.putExtra("location", data.getStringExtra("location"));
+                intent.putExtra("user", data.getStringExtra("user"));
                 Log.i(TAG, "location is: " + location);
                 startActivity(intent);
             }

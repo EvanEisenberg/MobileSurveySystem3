@@ -69,36 +69,38 @@ public class SurveyActivity extends AppCompatActivity {
 
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                Log.e("Count " ,""+snapshot.getChildrenCount());
+                Log.i(TAG ,"count "+snapshot.getChildrenCount());
+                Log.i(TAG, "user from intent: " + getIntent().getStringExtra("user"));
 
                 for (DataSnapshot userSnapshot: snapshot.getChildren()) {
-                    DataSnapshot coordSnapshot = userSnapshot.child(surveyCoords);
-                        for(DataSnapshot surv: coordSnapshot.getChildren()){
+                    if (userSnapshot.getKey().equals(getIntent().getStringExtra("user"))) {
+                        DataSnapshot coordSnapshot = userSnapshot.child(surveyCoords);
+                        for (DataSnapshot surv : coordSnapshot.getChildren()) {
                             surveyName = surv.getKey();
                             getSupportActionBar().setTitle(surveyName);
                         }
-                        DataSnapshot surv= coordSnapshot.child(surveyName);
+                        DataSnapshot surv = coordSnapshot.child(surveyName);
                         user = userSnapshot.getKey();
 
-                        for(DataSnapshot nums:surv.getChildren()){
-                            for(DataSnapshot ques:nums.getChildren()){
-                                if(first) {
+                        for (DataSnapshot nums : surv.getChildren()) {
+                            for (DataSnapshot ques : nums.getChildren()) {
+                                if (first) {
                                     scores.add(ques);
                                     String post = ques.getKey();
-                                    Log.e("curr", post);
+                                    Log.i(TAG, post);
                                     questions.add(post);
-                                    Log.e("arr", Integer.toString(questions.size()));
+                                    Log.i(TAG, Integer.toString(questions.size()));
                                 }
                             }
                         }
-
                         break;
+                    }
                 }
 
                 answers = new int[questions.size()];
                 TextView quesView = (TextView) findViewById(R.id.questionView);
                 quesView.setText(questions.get(0));
-                Log.e("Tag","Updating");
+                Log.i(TAG,"Updating");
                 if(first) {
                     updateQuestion(0);
                     first = false;
@@ -107,7 +109,7 @@ public class SurveyActivity extends AppCompatActivity {
             }
             @Override
             public void onCancelled(DatabaseError firebaseError) {
-                Log.e("The read failed: " ,firebaseError.getMessage());
+                Log.i("The read failed: " ,firebaseError.getMessage());
             }
         });
 
@@ -148,7 +150,7 @@ public class SurveyActivity extends AppCompatActivity {
                                 Toast.LENGTH_LONG).show();
                         return;
                     }
-                    Log.i("Finish", "thanks for answers");
+                    Log.i(TAG, "thanks for answers");
                     answers[currentQuestion] = rg.getCheckedRadioButtonId();
 //                    for(int x:answers){
 //                        Log.i("Finish", Integer.toString(x));
@@ -191,7 +193,7 @@ public class SurveyActivity extends AppCompatActivity {
             curr = scores.get(i-1).getValue().toString();
             double y = Double.parseDouble(curr.substring(0,curr.indexOf(",")));
             int z = Integer.parseInt(curr.substring(curr.indexOf(",")+1));
-            Log.i("Counts",y + " " + z);
+            Log.i(TAG,y + " " + z);
             //this calculates the average and then rounds it up
             double a = ((y*z)+x)/(++z) + 0.5;
 

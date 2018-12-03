@@ -159,12 +159,16 @@ public class QrActivity extends AppCompatActivity {
                             String code = barcodes.valueAt(0).displayValue;
                             Log.i(TAG, "after read");
                             String[] splitCode = code.split(";");
-                            userName = splitCode[0];
-                            location = splitCode[1];
-                            Log.i(TAG, "userName is " + userName);
-                            Log.i(TAG, "location is " + location);
-                            txtBarcodeValue.setText(location);
-                            btnAction.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                            if (splitCode.length == 2) {
+                                userName = splitCode[0];
+                                location = splitCode[1];
+                                Log.i(TAG, "userName is " + userName);
+                                Log.i(TAG, "location is " + location);
+                                txtBarcodeValue.setText(location);
+                                btnAction.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                            } else {
+                                Log.e(TAG, "splitCode size is " + splitCode.length);
+                            }
                         }
                     });
 

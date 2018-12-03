@@ -3,8 +3,6 @@ package com.example.yewang.mobilesurveysystem;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -21,6 +19,11 @@ import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
 
@@ -29,7 +32,6 @@ public class QrActivity extends AppCompatActivity {
     private static final String TAG = "Group-project";
     SurfaceView surfaceView;
     TextView txtBarcodeValue;
-    private BarcodeDetector barcodeDetector;
     private CameraSource cameraSource;
     private static final int REQUEST_CAMERA_PERMISSION = 201;
     Button btnAction;
@@ -55,10 +57,36 @@ public class QrActivity extends AppCompatActivity {
         btnAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent result = new Intent();
-                result.putExtra("location", intentData);
-                setResult(RESULT_OK, result);
-                finish();
+                ValueEventListener valListener = new ValueEventListener() {
+                    Intent result = new Intent();
+
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for(DataSnapshot user : dataSnapshot.getChildren()) {
+                            for (DataSnapshot coord : user.getChildren()) {
+                                if(coord.getKey().equals(intentData)) {
+                                    result.putExtra("location", intentData);
+                                    setResult(RESULT_OK, result);
+                                    Log.i(TAG, "data found");
+                                    finish();
+                                    break;
+                                }
+                            }
+                        }
+
+                        Log.i(TAG, "snapshot does not exist");
+                        Toast.makeText(getApplicationContext(), "Location invalid", Toast.LENGTH_SHORT).show();
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.e(TAG, "Database Error");
+                    }
+                };
+
+                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("New Survey");
+                mDatabase.addValueEventListener(valListener);
             }
         });
     }
@@ -67,7 +95,7 @@ public class QrActivity extends AppCompatActivity {
 
         Log.i(TAG, "initialize detectors and sources");
 
-        barcodeDetector = new BarcodeDetector.Builder(this)
+        BarcodeDetector barcodeDetector = new BarcodeDetector.Builder(this)
                 .setBarcodeFormats(Barcode.ALL_FORMATS)
                 .build();
 

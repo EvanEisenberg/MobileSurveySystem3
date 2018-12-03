@@ -84,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
                 createSurvey.setVisibility(View.INVISIBLE);
                 login.setVisibility(View.VISIBLE);
                 logout.setVisibility(View.INVISIBLE);
+                Toast.makeText(MainActivity.this, "Logging out!", Toast.LENGTH_SHORT).show();
 
             }
         });

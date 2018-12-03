@@ -45,14 +45,6 @@ public class ViewSurveyActivity extends AppCompatActivity {
         initData();
     }
 
-
-
-
-
-
-
-
-
     private void initData() {
         listDataHeader = new ArrayList<>();
         listHash = new HashMap<>();
@@ -68,9 +60,9 @@ public class ViewSurveyActivity extends AppCompatActivity {
             @Override
             public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
                 if (databaseError != null || !b || dataSnapshot == null) {
-                    System.out.println("Failed to get DataSnapshot");
+                    Log.i(TAG, "Failed to get DataSnapshot");
                 } else {
-                    System.out.println("Successfully get DataSnapshot");
+                    Log.i(TAG, "Successfully got DataSnapshot");
                     int loc = 0;
                     for (DataSnapshot uniqueID : dataSnapshot.getChildren()) {
                         for (DataSnapshot surveyTitle : uniqueID.getChildren()) {

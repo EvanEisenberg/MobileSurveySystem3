@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ExpandableListView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -19,70 +20,70 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
-public class ViewSurveyActivity extends ListActivity {
+public class ViewSurveyActivity extends AppCompatActivity {
 
     private static final String TAG = "Group-project";
-    private ArrayList<String> surveys;
+    private ExpandableListView listView;
+    private ExpandableListAdapter listAdapter;
+    private List<String> listDataHeader;
+    private HashMap<String, List<String>> listHash;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.i(TAG, "onCreate() for ViewSurvey called!");
         super.onCreate(savedInstanceState);
-        surveys = new ArrayList<String>();
+        setContentView(R.layout.activity_view_survey);
+        listView = (ExpandableListView) findViewById(R.id.lvExp);
+        initData();
+    }
 
+    private void initData() {
+        listDataHeader = new ArrayList<>();
+        listHash = new HashMap<>();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("New Survey").child(user.getUid());
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot i : dataSnapshot.getChildren()) {
-                    for (DataSnapshot k : i.getChildren()) {
-                        surveys.add(k.getKey());
 
-                    }
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(ViewSurveyActivity.this, R.layout.list_item, surveys);
-                    setListAdapter(adapter);
-                }
+        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("New Survey").child(user.getUid());
+        databaseReference.runTransaction(new Transaction.Handler() {
+            @Override
+            public Transaction.Result doTransaction(MutableData mutableData) {
+                return Transaction.success(mutableData);
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-
+            public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+                if (databaseError != null || !b || dataSnapshot == null) {
+                    Log.i(TAG, "Failed to get DataSnapshot");
+                } else {
+                    Log.i(TAG, "Successfully got DataSnapshot");
+                    int loc = 0;
+                    for (DataSnapshot uniqueID : dataSnapshot.getChildren()) {
+                        for (DataSnapshot surveyTitle : uniqueID.getChildren()) {
+                            listDataHeader.add(surveyTitle.getKey());
+                            List<String> questions = new ArrayList<>();
+                            for (DataSnapshot questionNumber : surveyTitle.getChildren()) {
+                                for (DataSnapshot questionName : questionNumber.getChildren()) {
+                                    String toAdd = questionName.getKey();
+                                    String[] split = questionName.getValue().toString().split(",");
+                                    toAdd += ": average score is " + split[0];
+                                        questions.add(toAdd);
+                                }
+                            }
+                            listHash.put(listDataHeader.get(loc), questions);
+                        }
+                        loc++;
+                    }
+                    listAdapter = new ExpandableListAdapter(ViewSurveyActivity.this, listDataHeader, listHash);
+                    listView.setAdapter(listAdapter);
+                }
             }
         });
     }
-
-    @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-
-    }
-
-//    @Override
-//    public void onListItemClick(ListView l, View v, int position, long id) {
-//        Log.i(TAG, "this was clicked: " + position);
-//
-//        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-//        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("New Survey").child(user.getUid()).child(surveys.get(position));
-//        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                for (DataSnapshot i : dataSnapshot.getChildren()) {
-//                    Log.i(TAG, "question: " + i.getKey());
-//                    questions.add(i.getKey());
-//                }
-//                ArrayAdapter<String> adapter = new ArrayAdapter<String>(ViewSurveyActivity.this, R.layout.list_item, questions);
-//                setListAdapter(adapter);
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-//    }
 }

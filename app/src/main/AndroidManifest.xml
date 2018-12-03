@@ -19,14 +19,14 @@
         android:roundIcon="@mipmap/ic_ye_flag_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SurveryWizard" />
-        <activity android:name=".SurveyActivity" />
-        <activity android:name=".AddWizardItem" />
-        <activity android:name=".QrActivity" />
+        <activity android:name=".SurveryWizard" android:screenOrientation="portrait"/>
+        <activity android:name=".SurveyActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".AddWizardItem" android:screenOrientation="portrait"/>
+        <activity android:name=".QrActivity" android:screenOrientation="portrait"/>
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -35,8 +35,8 @@
         </activity>
         <activity
             android:name=".LoginActivity"
-            android:label="@string/title_activity_login" />
-        <activity android:name=".ViewSurveyActivity"></activity>
+            android:label="@string/title_activity_login" android:screenOrientation="portrait"/>
+        <activity android:name=".ViewSurveyActivity" android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

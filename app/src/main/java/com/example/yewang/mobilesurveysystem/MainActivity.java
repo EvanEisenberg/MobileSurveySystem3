@@ -128,6 +128,8 @@ public class MainActivity extends AppCompatActivity {
                         //Intent intent = new Intent(MainActivity.this, SurveyActivity.class);
                         //startActivity(intent);
                         Log.i(TAG, "Launching view survey activity");
+                        Intent intent = new Intent(MainActivity.this, ViewSurveyActivity.class);
+                        startActivity(intent);
                     }
                 });
 

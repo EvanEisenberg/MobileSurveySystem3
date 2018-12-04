@@ -189,7 +189,8 @@ public class LoginActivity extends AppCompatActivity {
                         finish();
                         //updateUI(user);
                     } else {
-                        Toast.makeText(LoginActivity.this, "Incorrect email/password.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Invalid email/password. Please make sure that the email is correct" +
+                                " and that the password is 6 or more characters.", Toast.LENGTH_SHORT).show();
                         //Toast.makeText(LoginActivity.this, "YO!!!!.", Toast.LENGTH_SHORT).show();
                         //updateUI(null);
                     }
